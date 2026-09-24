@@ -120,6 +120,23 @@ def data_quirks(records):
         "unique_languages": sorted(unique_languages),
     }
 
+def build_summary(records):
+    """Combine all aggregations into one dictionary ready to write."""
+    return {
+        "source_url": source_url,
+        "records_processed": len(records),
+        "shows_per_genre": shows_per_genre(records),
+        "average_rating_by_language": average_rating_by_language(records),
+        "shows_per_network": shows_per_network(records),
+        "shows_per_decade": shows_per_decade(records),
+        "data_quirks": data_quirks(records),
+    }
+
+
+def write_summary(summary, path):
+    """Write the summary to a JSON file"""
+    with path.open("w", encoding="utf-8") as file:
+        json.dump(summary, file, indent=2)
 
 
 def main():
