@@ -46,6 +46,22 @@ def average_rating_by_language(records):
         for language, ratings in ratings_by_language.items()
     }
 
+def shows_per_network(records):
+    """Count how many shows belong to each network."""
+    network_counts = {}
+
+    for show in records:
+        network = show.get("network")
+
+        if network and network.get("name"):
+            network_name = network["name"]
+        else:
+            network_name = "No Network"
+
+        network_counts[network_name] = network_counts.get(network_name, 0) + 1
+
+    return network_counts
+
 
 def main():
     try:
