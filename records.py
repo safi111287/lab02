@@ -24,14 +24,40 @@ def shows_per_genre(records):
 
     return genre_shows_count
 
+def average_rating_by_language(records):
+    """Calculate the average show rating for each language"""
+    ratings_by_language = {}
+
+    for show in records:
+        language = show.get("language")
+        rating_data = show.get("rating") or {}
+        rating = rating_data.get("average")
+
+        if not language or rating is None:
+            continue
+
+        if language not in ratings_by_language:
+            ratings_by_language[language] = []
+
+        ratings_by_language[language].append(rating)
+
+    return {
+        language: round(sum(ratings) / len(ratings), 2)
+        for language, ratings in ratings_by_language.items()
+    }
+
+
 def main():
-    records = fetch_records(source_url)
-    print(f"\nDownloaded {len(records)} records from {source_url}")
-    
-    print("\nCount how many shows belong to each genre")
-    genre_shows_count = shows_per_genre(records)
-    for genre, count in genre_shows_count.items():
-        print(f"{genre}: {count}")
+    try:
+        records = fetch_records(source_url)
+
+    except (requests.RequestException, ValueError) as error:
+        print(f"Could not download TV show data: {error}")
+        return
+
+    print(f"Downloaded {len(records)} records from {source_url}")
+    print(f"Summary written to {output}")
+
 
 if __name__ == "__main__":
     main()
