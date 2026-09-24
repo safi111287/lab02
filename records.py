@@ -85,6 +85,42 @@ def shows_per_decade(records):
 
     return decade_counts
 
+def data_quirks(records):
+    """Summarize missing values and unique languages found in the dataset."""
+    shows_without_genres = 0
+    shows_without_rating = 0
+    shows_without_network = 0
+    shows_without_premiered_date = 0
+
+    unique_languages = set()
+
+    for show in records:
+        if not show.get("genres"):
+            shows_without_genres += 1
+
+        rating_data = show.get("rating") or {}
+        if rating_data.get("average") is None:
+            shows_without_rating += 1
+
+        if not show.get("network"):
+            shows_without_network += 1
+
+        if not show.get("premiered"):
+            shows_without_premiered_date += 1
+
+        language = show.get("language")
+        if language:
+            unique_languages.add(language)
+
+    return {
+        "shows_without_genres": shows_without_genres,
+        "shows_without_rating": shows_without_rating,
+        "shows_without_network": shows_without_network,
+        "shows_without_premiered_date": shows_without_premiered_date,
+        "unique_languages": sorted(unique_languages),
+    }
+
+
 
 def main():
     try:
