@@ -135,8 +135,13 @@ def build_summary(records):
 
 def write_summary(summary, path):
     """Write the summary to a JSON file"""
-    with path.open("w", encoding="utf-8") as file:
-        json.dump(summary, file, indent=2)
+    try:
+        with path.open("w", encoding="utf-8") as file:
+            json.dump(summary, file, indent=2)
+    except OSError as error:
+        print(f"Could not write summary to {path}: {error}")
+        return False
+    return True    
 
 
 def main():
@@ -148,11 +153,11 @@ def main():
         return
 
     summary = build_summary(records)
-    write_summary(summary, output)
 
     print(f"\nDownloaded {len(records)} records from {source_url}")
     print(f"\nSummary of TV show data: {summary}")
-    print(f"\nSummary written to {output}\n")
+    if write_summary(summary, output):
+        print(f"\nSummary written to {output}\n")
 
 
 if __name__ == "__main__":
