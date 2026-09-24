@@ -62,6 +62,29 @@ def shows_per_network(records):
 
     return network_counts
 
+def shows_per_decade(records):
+    """Count how many shows premiered in each decade."""
+    decade_counts = {}
+
+    for show in records:
+        premiered = show.get("premiered")
+
+        if not premiered or len(premiered) < 4:
+            continue
+
+        year_text = premiered[:4]
+
+        if not year_text.isdigit():
+            continue
+
+        year = int(year_text)
+        decade = (year // 10) * 10
+        decade_name = f"{decade}s"
+
+        decade_counts[decade_name] = decade_counts.get(decade_name, 0) + 1
+
+    return decade_counts
+
 
 def main():
     try:
