@@ -147,8 +147,12 @@ def main():
         print(f"Could not download TV show data: {error}")
         return
 
-    print(f"Downloaded {len(records)} records from {source_url}")
-    print(f"Summary written to {output}")
+    summary = build_summary(records)
+    write_summary(summary, output)
+
+    print(f"\nDownloaded {len(records)} records from {source_url}")
+    print(f"\nSummary of TV show data: {summary}")
+    print(f"\nSummary written to {output}\n")
 
 
 if __name__ == "__main__":
