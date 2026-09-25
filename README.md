@@ -17,13 +17,13 @@ At the time of testing, the API returned approximately 240 records. The number m
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/safi1111287/lab02.git
+git clone https://github.com/safi111287/lab02.git test-lab02-clone
 ```
 
 Then move into the project folder:
 
 ```bash
-cd lab02
+cd test-lab02-clone
 ```
 
 ## Setup
@@ -41,14 +41,15 @@ python -m venv .venv
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
-
 If PowerShell blocks script execution, run:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
-
-Then activate the environment again.
+Then activate the environment again with the same command
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
 
 **macOS/Linux:**
 
